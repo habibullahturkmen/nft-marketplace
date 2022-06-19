@@ -25,7 +25,7 @@ const MenuItems = ({ isMobile, active, setActive }) => {
           onClick={() => {
             setActive(item);
           }}
-          className={`flex flex-row items-center font-poppins font-semibold text-base dark-hover:text-white hover:text-nft-dark mx-3 ${active === item ? 'dark:text-white text-nft-black-1' : 'dark:text-nft-gray-3 text-nft-gray-2'}`}
+          className={`flex flex-row items-center font-poppins font-semibold text-base dark:hover:text-white hover:text-nft-dark mx-3 ${active === item ? 'dark:text-white text-nft-black-1' : 'dark:text-nft-gray-3 text-nft-gray-2'}`}
         >
           <Link href={generateLink(i)}>{item}</Link>
         </li>
@@ -62,7 +62,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="flexBetween w-full fixed z-10 p-4 flex-row border-b dark:bg-nft-dark bg-white dark:border-nft-black border-nft-gray-1">
+    <nav className="flexBetween w-full fixed z-10 p-4 flex-row border-b dark:bg-nft-dark bg-white dark:border-nft-black-1 border-nft-gray-1">
 
       <div className="flex flex-1 flex-row justify-start">
         <Link href="/">
