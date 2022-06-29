@@ -85,11 +85,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem('theme') === 'light') {
-      setTheme('light');
-    } else {
-      setTheme('dark');
-    }
+    setTheme('dark');
   }, []);
 
   useEffect(() => {
