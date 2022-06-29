@@ -47,7 +47,7 @@ const ResellNFT = () => {
         <Input
           inputType="number"
           title="Price"
-          placeholder="Asset Price"
+          placeholder="NFT Price"
           handleClick={(e) => setPrice(e.target.value)}
         />
 
