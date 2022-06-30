@@ -11,7 +11,7 @@ const MyNFTs = () => {
   const [nfts, setNfts] = useState([]);
   const [nftsCopy, setNftsCopy] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeSelect, setActiveSelect] = useState('Recently Added');
+  const [activeSelect, setActiveSelect] = useState('Recently added');
 
   useEffect(() => {
     fetchMyNFTsOrListedNFTs()
