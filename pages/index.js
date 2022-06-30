@@ -23,7 +23,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchNFTs().then((items) => {
-      setNfts(items);
+      setNfts(items.reverse());
       setNftsCopy(items);
       setIsLoading(false);
     });

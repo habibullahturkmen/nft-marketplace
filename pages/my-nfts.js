@@ -16,7 +16,7 @@ const MyNFTs = () => {
   useEffect(() => {
     fetchMyNFTsOrListedNFTs()
       .then((items) => {
-        setNfts(items);
+        setNfts(items.reverse());
         setNftsCopy(items);
         setIsLoading(false);
       });
