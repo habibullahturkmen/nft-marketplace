@@ -6,7 +6,12 @@ import { create as ipfsHttpClient } from 'ipfs-http-client';
 
 import { MarketAddress, MarketAddressABI } from './constants';
 
-const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
+async function getEnvData() {
+  const res = await axios('/api/url');
+  return res.data;
+}
+
+const subdomain = 'https://nft-marketplace-ipfs.infura-ipfs.io';
 
 const fetchContract = (signerOrProvider) => new ethers.Contract(MarketAddress, MarketAddressABI, signerOrProvider);
 
@@ -44,10 +49,22 @@ export const NFTProvider = ({ children }) => {
   };
 
   const uploadToIPFS = async (file) => {
+    const { ipfsProjectID, ipfsApiKeySecret } = await getEnvData();
+    const auth = `Basic ${Buffer.from(`${ipfsProjectID}:${ipfsApiKeySecret}`).toString('base64')}`;
+
+    const client = ipfsHttpClient({
+      host: 'ipfs.infura.io',
+      port: 5001,
+      protocol: 'https',
+      headers: {
+        authorization: auth,
+      },
+    });
+
     try {
       const added = await client.add({ content: file });
 
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      const url = `${subdomain}/ipfs/${added.path}`;
 
       return url;
     } catch (error) {
@@ -73,6 +90,17 @@ export const NFTProvider = ({ children }) => {
   };
 
   const createNFT = async (formInput, fileUrl, router) => {
+    const { ipfsProjectID, ipfsApiKeySecret } = await getEnvData();
+    const auth = `Basic ${Buffer.from(`${ipfsProjectID}:${ipfsApiKeySecret}`).toString('base64')}`;
+
+    const client = ipfsHttpClient({
+      host: 'ipfs.infura.io',
+      port: 5001,
+      protocol: 'https',
+      headers: {
+        authorization: auth,
+      },
+    });
     const { name, description, price } = formInput;
 
     if (!name || !description || !price || !fileUrl) {
@@ -84,7 +112,7 @@ export const NFTProvider = ({ children }) => {
     try {
       const added = await client.add(data);
 
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      const url = `${subdomain}/ipfs/${added.path}`;
 
       await createSale(url, price);
 
@@ -96,7 +124,8 @@ export const NFTProvider = ({ children }) => {
 
   const fetchNFTs = async () => {
     setIsLoadingNFT(false);
-    const provider = new ethers.providers.JsonRpcProvider();
+    const { rpcURL } = await getEnvData();
+    const provider = new ethers.providers.JsonRpcProvider(rpcURL);
     const contract = fetchContract(provider);
 
     const data = await contract.fetchMarketItems();
