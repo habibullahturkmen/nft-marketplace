@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { ThemeProvider } from 'next-themes';
 import Script from 'next/script';
 
@@ -11,6 +12,9 @@ const MyApp = ({ Component, pageProps }) => (
       <div className="dark:bg-nft-dark bg-white min-h-screen">
         <Navbar />
         <div className="pt-65">
+          <Head>
+            <title>Cryptoket</title>
+          </Head>
           <Component {...pageProps} />
         </div>
         <Footer />
